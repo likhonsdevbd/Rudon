@@ -1,109 +1,139 @@
-# Agent Instructions for rudon-chatbot (Next.js Version)
+# Agent Instructions for Rüdon Chatbot
 
 ## 📖 Project Overview
 
-**Purpose**: An intelligent AI chatbot built as a modern web application.
-**Type**: Web App
+**Purpose**: An intelligent AI bot that answers questions and chats naturally.
+**Type**: Web Application
 **Primary Language(s)**: TypeScript
-**Framework(s)**: Next.js (App Router), React
-**Key Libraries**:
-- Vercel AI SDK (`ai` package) for chat functionality.
-- `@ai-sdk/mistral` for connecting to Mistral models.
-- `shadcn-ui` for UI components.
-- `tailwindcss` for styling.
-
-**Architecture**: This is a Next.js application. The frontend is a single-page chat interface built with React and `shadcn-ui`. The backend logic is handled by a Next.js API route (`/api/chat`) that securely communicates with an AI model and streams the response back to the client.
-
-## 🤖 Agent Workflow Protocol
-
-As an AI agent working on this repository, you **must** adhere to the following protocol:
-
-1.  **Initial Scan & Planning**: Before making any code changes, perform a full scan of the codebase to understand the current structure and logic.
-2.  **Create `Todo.md`**: After the initial scan, create a `Todo.md` file outlining the planned tasks. This file should be kept up-to-date as you complete each task.
-3.  **Security First**: Always prioritize security. Never hardcode API keys or other secrets. Use environment variables (`.env.local`).
-4.  **Consult Documentation**: If you encounter a problem or are unsure about the usage of a library (e.g., Vercel AI SDK, Next.js, `shadcn-ui`), you should proactively scan the official documentation for that library to find a solution.
-5.  **Error-Free Focus**: Strive to produce high-quality, error-free code. Run the linter (`npm run lint`) and test your changes thoroughly.
+**Framework(s)**: Next.js, React
+**Architecture**: The project is a standard Next.js application. It uses a single API route for handling chat functionality and a frontend built with React and shadcn/ui.
 
 ## 📁 Directory Structure
 
 ```
-.
-├── app/
-│   ├── api/chat/route.ts   # The core API endpoint for the chatbot
-│   ├── globals.css         # Global styles and Tailwind directives
-│   ├── layout.tsx          # Root layout for the application
-│   └── page.tsx            # The main chat UI component
-├── components/             # shadcn-ui components
-├── lib/
-│   └── utils.ts            # Utility functions from shadcn-ui
-├── public/                 # Static assets
-├── .env.local.example      # Example for environment variables
-├── components.json         # shadcn-ui configuration
-├── next.config.mjs         # Next.js configuration
-├── package.json
-└── tsconfig.json
+/
+├── app/ - Main application source code, including API routes and pages.
+│   ├── api/chat/route.ts - API endpoint for the chatbot.
+│   └── page.tsx - The main page of the application.
+├── lib/ - Utility functions.
+│   └── utils.ts
+├── node_modules/ - Project dependencies.
+├── .env.local.example - Example for environment variables file.
+├── next.config.mjs - Configuration file for Next.js.
+├── package.json - Project dependencies and scripts.
+└── tsconfig.json - TypeScript configuration.
 ```
 
 ## 🚀 Development Setup
 
 ### Installation
 ```bash
-# Clone the repository
+# Clone repository
 git clone [repo-url]
-cd [project-name]
+cd rudon-chatbot
 
 # Install dependencies
 npm install
 ```
 
 ### Environment Variables
-You need to create a `.env.local` file in the root of the project and add your Mistral API key:
+Create a `.env.local` file in the root of the project and add the following environment variables:
+
 ```bash
-# .env.local
-MISTRAL_API_KEY="your-mistral-api-key"
+MISTRAL_API_KEY=your_mistral_api_key
+```
+
+### Build
+
+```bash
+npm run build
 ```
 
 ### Run Locally
+
 ```bash
 npm run dev
 ```
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+### Run Tests
+There are currently no tests in this project.
+
+## 🎨 Code Style & Conventions
+
+- **Formatting**: The project uses Prettier for code formatting, which is integrated with ESLint.
+- **Naming conventions**:
+- Variables: `camelCase`
+- Classes: `PascalCase`
+- Files: `kebab-case`
+- Constants: `UPPER_SNAKE_CASE`
+- **File organization**: The project follows the standard Next.js `app` directory structure.
 
 ## 🧪 Testing Guidelines
 
-There are currently no automated tests in this project. When adding new features, you should consider adding corresponding tests.
+There are currently no testing guidelines for this project.
 
-- **Linting**: You can run the linter to check for code style issues:
-  ```bash
-  npm run lint
-  ```
+## 🏗️ Important Patterns & Conventions
+
+### API Design
+
+- The project uses a single API endpoint at `/api/chat` for handling chat functionality.
+- The API follows the Vercel AI SDK conventions.
 
 ## 🔒 Security Considerations
 
-- **API Keys**: The `MISTRAL_API_KEY` is a sensitive secret. It is used on the server-side only (in the API route) and should never be exposed to the client. Always load it from environment variables.
-- **Input Validation**: While the AI SDK handles some aspects of the chat, be mindful of any user input that is processed on the server.
+### Sensitive Files (Never Commit)
+
+- `.env.local` - Environment variables
+
+### Environment Variables
+
+```bash
+# Required variables (add to .env.local)
+MISTRAL_API_KEY=your_mistral_api_key
+```
 
 ## ✅ Common Tasks
 
-### Adding a New UI Component
+### Adding a New API Endpoint
 
-1.  Use the `shadcn-ui` CLI to add the component:
-    ```bash
-    npx shadcn-ui@latest add [component-name]
-    ```
-2.  Import the new component into `app/page.tsx` or another client component.
-3.  Use the component to build out the UI.
+1. Create a new file in `app/api/` with a descriptive name.
+2. Implement the business logic for the new endpoint.
 
-### Modifying the Chat Prompt
+### Adding a New React Component
 
-- The core logic for interacting with the AI is in `app/api/chat/route.ts`.
-- You can modify the `streamText` call to add system prompts, change the model, or adjust other parameters.
+1. Create a new component file in a `components/` directory (to be created).
+2. Add styles for the component.
+3. Write tests for the component.
+4. Export the component from an `index.ts` file in the `components/` directory.
+
+## 📤 Git & Commit Conventions
+
+### Branch Naming
+
+- Feature: `feature/user-authentication`
+- Bug fix: `fix/login-error`
+- Hotfix: `hotfix/security-patch`
+- Refactor: `refactor/api-structure`
+
+### Commit Messages
+
+Follow Conventional Commits:
+
+```
+feat(auth): add password reset functionality
+fix(api): resolve race condition in user creation
+docs(readme): update installation instructions
+```
 
 ## 🚢 Deployment
 
-This application is designed to be deployed on [Vercel](https://vercel.com/).
+The project is configured to be deployed on Vercel.
 
-1.  Push your code to a Git repository (e.g., GitHub).
-2.  Import the project into Vercel.
-3.  Set the `MISTRAL_API_KEY` environment variable in the Vercel project settings.
-4.  Vercel will automatically build and deploy the application.
+### Environments
+
+- **Development**: Deployed from the `develop` branch.
+- **Production**: Deployed from the `main` branch.
+
+### Deploy Commands
+
+Deployment is handled automatically by Vercel when changes are pushed to the `main` or `develop` branches.
