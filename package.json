@@ -1,22 +1,25 @@
 {
-  "name": "code-interpreter-agent",
+  "name": "ai-api-server",
   "version": "1.0.0",
-  "description": "A code interpreter agent that can create and execute plans.",
-  "main": "dist/code-interpreter.js",
+  "description": "An Express server with AI SDK integration.",
+  "main": "dist/server.js",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/code-interpreter.js"
+    "start": "node dist/server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@e2b/code-interpreter": "^0.0.6",
-    "@mistralai/mistralai": "^0.1.0",
+    "@google/generative-ai": "^0.1.0",
+    "express": "^4.17.1",
+    "cors": "^2.8.5",
     "dotenv": "^16.3.1"
   },
   "devDependencies": {
     "@types/node": "^24.10.0",
+    "@types/express": "^4.17.13",
+    "@types/cors": "^2.8.12",
     "typescript": "^5.9.3"
   }
 }

@@ -2,11 +2,13 @@
   "compilerOptions": {
     "target": "es6",
     "module": "commonjs",
+    "moduleResolution": "node",
     "outDir": "./dist",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true
   },
   "include": [
     "src/**/*"
