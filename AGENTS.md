@@ -1,24 +1,27 @@
-# Agent Instructions for rudon-chatbot
+# Agent Instructions for Rüdon Chatbot
 
 ## 📖 Project Overview
 
-**Purpose**: A simple, intelligent AI bot that answers questions and chats naturally, with support for different AI models.
-**Type**: CLI tool
-**Primary Language(s)**: JavaScript (Node.js)
-**Framework(s)**: None
-**Architecture**: The project consists of two separate entry points, `index.js` and `index-codestral.js`, each interacting with a different AI model. It uses `readline-sync` for command-line input.
+**Purpose**: An intelligent AI bot that answers questions and chats naturally.
+**Type**: Web Application
+**Primary Language(s)**: TypeScript
+**Framework(s)**: Next.js, React
+**Architecture**: The project is a standard Next.js application. It uses a single API route for handling chat functionality and a frontend built with React and shadcn/ui.
 
 ## 📁 Directory Structure
 
-The project has a flat directory structure:
 ```
-.
-├── .gitignore
-├── README.md
-├── index-codestral.js  # Entry point for the Codestral model
-├── index.js            # Entry point for the Hugging Face model
-├── package-lock.json
-└── package.json
+/
+├── app/ - Main application source code, including API routes and pages.
+│   ├── api/chat/route.ts - API endpoint for the chatbot.
+│   └── page.tsx - The main page of the application.
+├── lib/ - Utility functions.
+│   └── utils.ts
+├── node_modules/ - Project dependencies.
+├── .env.local.example - Example for environment variables file.
+├── next.config.mjs - Configuration file for Next.js.
+├── package.json - Project dependencies and scripts.
+└── tsconfig.json - TypeScript configuration.
 ```
 
 ## 🚀 Development Setup
@@ -33,114 +36,104 @@ cd rudon-chatbot
 npm install
 ```
 
+### Environment Variables
+Create a `.env.local` file in the root of the project and add the following environment variables:
+
+```bash
+MISTRAL_API_KEY=your_mistral_api_key
+```
+
+### Build
+
+```bash
+npm run build
+```
+
 ### Run Locally
 
-There are two ways to run the bot, depending on the desired AI model:
-
-**Using Hugging Face model (DeepSeek-V3-0324):**
 ```bash
-npm start
+npm run dev
 ```
-
-**Using Codestral model:**
-This requires a `CODESTRAL_API_KEY` environment variable.
-
-```bash
-# On Linux/macOS
-export CODESTRAL_API_KEY='your-api-key'
-npm run start:codestral
-
-# On Windows
-set CODESTRAL_API_KEY='your-api-key'
-npm run start:codestral
-```
-Alternatively, you can create a `.env` file and use a package like `dotenv` to manage environment variables.
 
 ### Run Tests
-
-There are no automated tests in this project.
+There are currently no tests in this project.
 
 ## 🎨 Code Style & Conventions
 
-- **Formatting**: The project does not have a defined code style or linter.
-- **Naming conventions**: Variables are in `camelCase`, and file names are in `kebab-case`.
-- **File organization**: Each entry point is in its own file.
-- **Comments**: The code is not heavily commented, but it is straightforward.
+- **Formatting**: The project uses Prettier for code formatting, which is integrated with ESLint.
+- **Naming conventions**:
+- Variables: `camelCase`
+- Classes: `PascalCase`
+- Files: `kebab-case`
+- Constants: `UPPER_SNAKE_CASE`
+- **File organization**: The project follows the standard Next.js `app` directory structure.
+
+## 🧪 Testing Guidelines
+
+There are currently no testing guidelines for this project.
 
 ## 🏗️ Important Patterns & Conventions
 
-### Error Handling
-The application has minimal error handling. If an API call to the AI model fails, the application will likely crash.
+### API Design
 
-### Logging
-The application uses `console.log` for all output. There is no structured logging framework in place.
+- The project uses a single API endpoint at `/api/chat` for handling chat functionality.
+- The API follows the Vercel AI SDK conventions.
 
 ## 🔒 Security Considerations
 
 ### Sensitive Files (Never Commit)
 
-- `.env` - Environment variables (if you choose to use `dotenv`)
-- `.env.local` - Local overrides
+- `.env.local` - Environment variables
 
 ### Environment Variables
 
-The `index-codestral.js` script requires the `CODESTRAL_API_KEY` environment variable:
-
 ```bash
-# Required for index-codestral.js
-CODESTRAL_API_KEY=your-api-key
+# Required variables (add to .env.local)
+MISTRAL_API_KEY=your_mistral_api_key
 ```
-
-### Secret Management
-
-- Never hardcode API keys in the source code.
-- Use environment variables for all secrets.
 
 ## ✅ Common Tasks
 
-### Chatting with the bot
+### Adding a New API Endpoint
 
-1.  Run the desired script (`npm start` or `npm run start:codestral`).
-2.  Type your question and press Enter.
-3.  Type `exit` to quit the application.
+1. Create a new file in `app/api/` with a descriptive name.
+2. Implement the business logic for the new endpoint.
 
-### Changing the AI model
+### Adding a New React Component
 
-- To use a different Hugging Face model, modify the model identifier in `index.js`.
-- To use a different Mistral model, modify the model identifier in `index-codestral.js`.
+1. Create a new component file in a `components/` directory (to be created).
+2. Add styles for the component.
+3. Write tests for the component.
+4. Export the component from an `index.ts` file in the `components/` directory.
 
 ## 📤 Git & Commit Conventions
 
-No formal Git or commit conventions are currently enforced in this project. It is recommended to follow standard practices.
-
 ### Branch Naming
+
 - Feature: `feature/user-authentication`
 - Bug fix: `fix/login-error`
+- Hotfix: `hotfix/security-patch`
+- Refactor: `refactor/api-structure`
 
 ### Commit Messages
+
 Follow Conventional Commits:
+
 ```
 feat(auth): add password reset functionality
 fix(api): resolve race condition in user creation
+docs(readme): update installation instructions
 ```
 
 ## 🚢 Deployment
 
-This is a command-line application and is not intended for deployment. It is run locally.
+The project is configured to be deployed on Vercel.
 
-## ⚠️ Gotchas & Special Notes
+### Environments
 
-- The `index.js` script uses the `@ai-sdk/huggingface` package, which may have its own dependencies and authentication requirements.
-- The `index-codestral.js` script requires a `CODESTRAL_API_KEY` to be set.
-- There is no error handling for API calls. If an API call fails, the application will crash.
+- **Development**: Deployed from the `develop` branch.
+- **Production**: Deployed from the `main` branch.
 
-## 📚 External Resources
+### Deploy Commands
 
-- **`@ai-sdk/huggingface`**: [https://www.npmjs.com/package/@ai-sdk/huggingface](https://www.npmjs.com/package/@ai-sdk/huggingface)
-- **`@mistralai/mistralai`**: [https://www.npmjs.com/package/@mistralai/mistralai](https://www.npmjs.com/package/@mistralai/mistralai)
-- **`readline-sync`**: [https://www.npmjs.com/package/readline-sync](https://www.npmjs.com/package/readline-sync)
-
-## ❓ Questions or Issues?
-
-- **Bugs**: Create an issue in the GitHub repository.
-- **Feature requests**: Create an issue in the GitHub repository.
+Deployment is handled automatically by Vercel when changes are pushed to the `main` or `develop` branches.
